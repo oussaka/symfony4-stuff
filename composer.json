@@ -8,6 +8,7 @@
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/lts": "^4@dev",
+        "symfony/twig-bundle": "^4.0",
         "symfony/web-server-bundle": "^4.0",
         "symfony/yaml": "^4.0"
     },
@@ -33,7 +34,7 @@
     },
     "replace": {
         "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php71": "*",
+        "sym²fony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
     },
