@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class homeController
 {
-    public function index()
+    public function __invoke()
     {
         return new Response("Hello Symfony 4 !");
     }
