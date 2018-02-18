@@ -9,12 +9,13 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class homeController
+class homeController extends AbstractController
 {
     public function __invoke()
     {
-        return new Response("Hello Symfony 4 !");
+        return $this->render('home/home.html.twig', ['comments' => []]);
     }
 }
