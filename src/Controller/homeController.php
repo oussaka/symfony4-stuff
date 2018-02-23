@@ -9,16 +9,39 @@
 namespace App\Controller;
 
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
+use Nexy\Slack\Client;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class homeController
 {
+
+    private $slack;
+    private $logger;
+
+    /**
+     * homeController constructor.
+     */
+    public function __construct(Client $slack, LoggerInterface $logger)
+    {
+        $this->slack  = $slack;
+        $this->logger = $logger;
+    }
+
     public function __invoke(Environment $twigEnvironment, MarkdownParserInterface $markdown, AdapterInterface $cache)
     {
-
         // dump($cache); die;
+        $this->logger->info('They are talking about bacon again!');
+
+        if ($slug ?? 'khaaaaaan' === 'khaaaaaan') {
+            $message = $this->slack->createMessage()
+                ->from('Khan')
+                ->withIcon(':ghost:')
+                ->setText('Ah, Kirk, my old friend...');
+            $this->slack->sendMessage($message);
+        }
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',

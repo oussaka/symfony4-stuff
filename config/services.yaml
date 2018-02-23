@@ -29,3 +29,4 @@ services:
 #    App\Service\MarkdownHelper:
 #        arguments:
 #            $logger: '@monolog.logger.markdown'
+    Nexy\Slack\Client: '@nexy_slack.client'
