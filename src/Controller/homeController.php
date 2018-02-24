@@ -8,32 +8,31 @@
 
 namespace App\Controller;
 
+use App\Service\MarkdownHelper;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Nexy\Slack\Client;
 use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class homeController
+class homeController extends AbstractController
 {
 
     private $slack;
-    private $logger;
 
     /**
      * homeController constructor.
      */
-    public function __construct(Client $slack, LoggerInterface $logger)
+    public function __construct(Client $slack)
     {
         $this->slack  = $slack;
-        $this->logger = $logger;
     }
 
-    public function __invoke(Environment $twigEnvironment, MarkdownParserInterface $markdown, AdapterInterface $cache)
+    public function __invoke(MarkdownHelper $markdownHelper)
     {
         // dump($cache); die;
-        $this->logger->info('They are talking about bacon again!');
 
         if ($slug ?? 'khaaaaaan' === 'khaaaaaan') {
             $message = $this->slack->createMessage()
@@ -64,13 +63,11 @@ strip steak pork belly aliquip capicola officia. Labore deserunt esse chicken lo
 cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck
 fugiat.
 EOF;
-        $articleContent = $markdown->transform($articleContent);
+        $articleContent = $markdownHelper->parse($articleContent);
 
-        return new Response(
-            $twigEnvironment->render('home/home.html.twig', [
+        return $this->render('home/home.html.twig', [
                 'comments'       => $comments,
                 'articleContent' => $articleContent,
-            ])
-        );
+        ]);
     }
 }
