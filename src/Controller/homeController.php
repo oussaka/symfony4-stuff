@@ -30,9 +30,9 @@ class homeController extends AbstractController
         $this->slack  = $slack;
     }
 
+
     public function __invoke(MarkdownHelper $markdownHelper)
     {
-        // dump($cache); die;
 
         if ($slug ?? 'khaaaaaan' === 'khaaaaaan') {
             $message = $this->slack->createMessage()
