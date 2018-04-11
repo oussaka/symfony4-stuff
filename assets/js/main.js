@@ -1,8 +1,8 @@
 'use strict';
 
+
 import $ from 'jquery';
-import 'bootstrap-sass';
-// require('bootstrap-sass');
+import 'bootstrap/dist/js/bootstrap'
 
 window.$ = $;
 
@@ -15,5 +15,7 @@ $(document).ready(function () {
     // var repLogApp = new RepLogApp($wrapper);
     $('.dropdown-toggle').dropdown();
 
-    console.log("oXXXopp");
+    $(".close").click(() => {
+        $("#alert1").alert("close");
+    });
 });

@@ -14,12 +14,11 @@ Encore
     .addEntry('app', './assets/js/main.js')
     .addStyleEntry('global', './assets/css/main.css')
 
-    .createSharedEntry('vendor', [
-        'jquery'
-    ])
+    // .createSharedEntry('vendor', [
+    //     'jquery'
+    // ])
 
     .enableSassLoader()
-    .enablePostCssLoader()
     .autoProvidejQuery()
 
     .addPlugin(new CopyWebpackPlugin([
