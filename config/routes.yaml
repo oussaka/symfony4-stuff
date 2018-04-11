@@ -1,3 +1,9 @@
 home:
     path: /
     controller: App\Controller\HomeController
+
+remove_trailing_slash:
+    path:       /{url}
+    controller: App\Controller\RedirectingController::removeTrailingSlash
+    requirements:
+        url: .*/$
