@@ -17,6 +17,7 @@
     "build": "./node_modules/.bin/encore production"
   },
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "popper.js": "^1.14.1"
   }
 }

@@ -59,7 +59,8 @@ EOF;
         $articleContent = $markdownHelper->parse($articleContent);
 
         return $this->render('home/home.html.twig', [
-            'comments' => $comments,
+            'comments'       => $comments,
+            'slug'           => 'slugTest',
             'articleContent' => $articleContent,
         ]);
     }

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="alert alert-success" role="alert" id="alert1">
+        <a href="#" class="close">&times;</a>
+        <h5 class="alert-heading">Hello, {{ app.request.query.get('name') | default('CodeReviewVideos') }}!</h5>
+        <p>You can enter any text message to convey to your users and below is an image.</p>
+        <img src="{{ asset('build/images/assistance.png') }}" />
+    </div>
+
+
+    <div class="example-wrapper">
+        <h1>Hello {{ controller_name }}! ✅</h1>
+
+        This friendly message is coming from:
+        <ul>
+            <li>Your controller at <code>src/Controller/WelcomeController.php</code></li>
+            <li>Your template at <code>templates/welcome/index.html.twig</code></li>
+        </ul>
+    </div>
+{% endblock %}

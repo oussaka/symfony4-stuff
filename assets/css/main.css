@@ -1,10 +1,15 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.min.css';
 
 .main-content {
     margin-top: 80px;
 }
 footer.footer {
     margin-top: 100px;
+}
+
+span a.like-article {
+    text-decoration: none;
 }
 
 .mini-dumbbell {

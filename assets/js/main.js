@@ -18,4 +18,17 @@ $(document).ready(function () {
     $(".close").click(() => {
         $("#alert1").alert("close");
     });
+
+    $(".like-article").on("click", (e) => {
+        e.preventDefault();
+        let $link = $(e.currentTarget);
+        $link.toggleClass('fa-heart-o').toggleClass('fa-heart');
+
+        $.ajax({
+            method: 'POST',
+            url: $link.attr('href')
+        }).done(function(data) {
+            $('.js-like-article-count').html(data.hearts);
+        })
+    });
 });
