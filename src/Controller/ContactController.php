@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\CacheExample;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,4 +51,22 @@ class ContactController extends Controller
             'hit'  => $cachedData->isHit(),
         ]);
     }
+
+    /**
+     * @Route("/cacheredis", name="cacheRedis")
+     * @param CacheItemPoolInterface $cache
+     * @return Response
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function cacheRedis(CacheExample $cache)
+    {
+
+        return $this->render('contact/index.html.twig', [
+            'cache' => [
+                'hit' => $cache->getItem()->isHit(),
+            ],
+            'controller_name' => 'ContactController',
+        ]);
+    }
+
 }
