@@ -18,6 +18,7 @@ class ContactController extends Controller
     {
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
+            'cache' => ['hit' => false]
         ]);
     }
 
@@ -63,7 +64,7 @@ class ContactController extends Controller
 
         return $this->render('contact/index.html.twig', [
             'cache' => [
-                'hit' => $cache->getItem()->isHit(),
+                'hit' => $cache->get('some-value')->isHit(),
             ],
             'controller_name' => 'ContactController',
         ]);

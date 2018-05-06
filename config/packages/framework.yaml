@@ -20,3 +20,11 @@ framework:
     cache:
         app: cache.adapter.redis
         default_redis_provider: "redis://%redis.host%:%redis.port%"
+        pools:
+            app.cache.widget:
+                public: true
+                adapter: cache.adapter.redis
+                default_lifetime: 100 # 100 seconds
+            app.cache.sprocket:
+                adapter: cache.adapter.redis
+                default_lifetime: 604800 # 1 week in seconds

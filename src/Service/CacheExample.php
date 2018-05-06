@@ -19,9 +19,9 @@ class CacheExample
      * @return \Psr\Cache\CacheItemInterface
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function getItem()
+    public function get(string $key)
     {
-        $cacheKey = md5('123');
+        $cacheKey = md5($key);
 
         $cachedItem = $this->cache->getItem($cacheKey);
 

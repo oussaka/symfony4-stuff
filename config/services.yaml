@@ -53,3 +53,7 @@ services:
         arguments:
             $mySweetParam: '%app.mySweetParam%'
             $logger: '@logger'
+
+    App\Service\CacheExample:
+        arguments:
+            $cache: "@app.cache.widget"
