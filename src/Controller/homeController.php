@@ -19,7 +19,6 @@ use Twig\Environment;
 
 class homeController extends AbstractController
 {
-
     private $slack;
 
     /**
