@@ -16,16 +16,18 @@ class Article
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     public $id;
+
     /**
      * @ORM\Column(type="string", length=100)
      */
     public $name;
+
     /**
      * @ORM\Column(type="text")
      */
     public $description;
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -33,9 +35,11 @@ class Article
     public function setName(string $name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
-    public function getDescription() : ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
