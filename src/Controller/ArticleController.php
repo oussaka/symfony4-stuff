@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
+use App\Service\ArticleService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\View\View;
@@ -11,13 +11,27 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * article controller
+ * Article controller
  * @package App\Controller
  *
  * @Route("/api")
  */
-class articleController extends AbstractFOSRestController
+class ArticleController extends AbstractFOSRestController
 {
+    /**
+     * @var ArticleService
+     */
+    private $articleService;
+
+    /**
+     * ArticleController constructor.
+     * @param ArticleService $articleService
+     */
+    public function __construct(ArticleService $articleService)
+    {
+        $this->articleService = $articleService;
+    }
+
     /**
      * Lists all Articles.
      * @FOSRest\Get("/articles")
@@ -25,11 +39,9 @@ class articleController extends AbstractFOSRestController
      */
     public function getArticles(): View
     {
-        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $this->articleService->getAllArticles();
 
-        $article = $repository->findall();
-
-        return View::create($article, Response::HTTP_OK, []);
+        return View::create($articles, Response::HTTP_OK, []);
     }
 
     /**
@@ -39,7 +51,8 @@ class articleController extends AbstractFOSRestController
      */
     public function getArticle(int $articleId): View
     {
-        $article = $this->getDoctrine()->getRepository(Article::class)->findById($articleId);
+        $article = $this->articleService->getArticle($articleId);
+
         // In case our GET was a success we need to return a 200 HTTP OK response with the request object
         return View::create($article, Response::HTTP_OK);
     }
@@ -52,12 +65,7 @@ class articleController extends AbstractFOSRestController
      */
     public function postArticle(Request $request): View
     {
-        $article = new Article();
-        $article->setName($request->get('name'));
-        $article->setDescription($request->get('description'));
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+        $article = $this->articleService->addArticle($request->get('name'), $request->get('description'));
 
         return View::create($article, Response::HTTP_CREATED, []);
     }
@@ -69,13 +77,12 @@ class articleController extends AbstractFOSRestController
      */
     public function putArticle(int $articleId, Request $request): View
     {
-        $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository(Article::class)->findById($articleId);
-        if ($article) {
-            $article->setTitle($request->get('title'));
-            $article->setContent($request->get('content'));
-            $em->getRepository(Article::class)->save($article);
-        }
+        $article = $this->articleService->updateArticle(
+            $articleId,
+            $request->get('name'),
+            $request->get('description')
+        );
+
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
         return View::create($article, Response::HTTP_OK);
     }
@@ -87,10 +94,8 @@ class articleController extends AbstractFOSRestController
      */
     public function deleteArticle(int $articleId): View
     {
-        $article = $this->getDoctrine()->getRepository(Article::class)->findById($articleId);
-        if ($article) {
-            $this->getDoctrine()->getRepository(Article::class)->delete($article);
-        }
+        $this->articleService->deleteArticle($articleId);
+
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.
         return View::create([], Response::HTTP_NO_CONTENT);
     }

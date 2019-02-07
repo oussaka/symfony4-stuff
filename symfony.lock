@@ -102,13 +102,13 @@
         "version": "v1.2.17"
     },
     "jms/metadata": {
-        "version": "1.6.0"
+        "version": "1.7.0"
     },
     "jms/parser-lib": {
         "version": "1.0.0"
     },
     "jms/serializer": {
-        "version": "1.11.0"
+        "version": "1.13.0"
     },
     "jms/serializer-bundle": {
         "version": "2.0",
@@ -120,7 +120,7 @@
         }
     },
     "knplabs/knp-markdown-bundle": {
-        "version": "1.7.0"
+        "version": "1.7.1"
     },
     "michelf/php-markdown": {
         "version": "1.8.0"
@@ -342,7 +342,7 @@
         }
     },
     "symfony/security-core": {
-        "version": "v4.0.5"
+        "version": "v4.2.3"
     },
     "symfony/serializer": {
         "version": "v4.2.3"
@@ -351,7 +351,7 @@
         "version": "v4.0.4"
     },
     "symfony/templating": {
-        "version": "v4.0.5"
+        "version": "v4.2.3"
     },
     "symfony/twig-bridge": {
         "version": "v4.0.4"

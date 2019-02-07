@@ -9,15 +9,10 @@
 namespace App\Controller;
 
 use App\Service\MarkdownHelper;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Nexy\Slack\Client;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment;
 
-class homeController extends AbstractController
+class HomeController extends AbstractController
 {
     private $slack;
 
@@ -26,9 +21,8 @@ class homeController extends AbstractController
      */
     public function __construct(Client $slack)
     {
-        $this->slack  = $slack;
+        $this->slack = $slack;
     }
-
 
     public function __invoke(MarkdownHelper $markdownHelper)
     {
@@ -65,8 +59,8 @@ EOF;
         $articleContent = $markdownHelper->parse($articleContent);
 
         return $this->render('home/home.html.twig', [
-                'comments'       => $comments,
-                'articleContent' => $articleContent,
+            'comments' => $comments,
+            'articleContent' => $articleContent,
         ]);
     }
 }
