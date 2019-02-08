@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityNotFoundException;
 
 final class ArticleService
 {
@@ -19,7 +20,11 @@ final class ArticleService
 
     public function getArticle(int $id): ?Article
     {
-        return $this->articleRepository->find($id);
+        if (!$article = $this->articleRepository->find($id)) {
+            throw new EntityNotFoundException('Article with id '.$id.' does not exist!');
+        }
+
+        return $article;
     }
 
     public function getAllArticles(): ?array
@@ -41,7 +46,7 @@ final class ArticleService
     public function updateArticle(int $id, string $name, string $description): ?Article
     {
         if (!$article = $this->articleRepository->findById($id)) {
-            return null;
+            throw new EntityNotFoundException('Article with id '.$id.' does not exist!');
         }
         $article->setName($name);
         $article->setDescription($description);
@@ -52,9 +57,10 @@ final class ArticleService
 
     public function deleteArticle(int $id): void
     {
-        $article = $this->articleRepository->findById($id);
-        if ($article) {
-            $this->articleRepository->delete($article);
+        if (!$article = $this->articleRepository->findById($id)) {
+            throw new EntityNotFoundException('Article with id '.$id.' does not exist!');
         }
+
+        $this->articleRepository->delete($article);
     }
 }
