@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Application\DTO\ArticleDTO;
 use App\Service\ArticleService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -61,12 +61,13 @@ class ArticleController extends AbstractFOSRestController
     /**
      * Create Article.
      * @FOSRest\Post("/article")
-     * @param Request $request
+     * @ParamConverter("articleDTO", converter="fos_rest.request_body")
+     * @param ArticleDTO $articleDTO
      * @return View
      */
-    public function postArticle(Request $request): View
+    public function postArticle(ArticleDTO $articleDTO): View
     {
-        $article = $this->articleService->addArticle($request->get('name'), $request->get('description'));
+        $article = $this->articleService->addArticle($articleDTO);
 
         return View::create($article, Response::HTTP_CREATED, []);
     }
@@ -74,16 +75,15 @@ class ArticleController extends AbstractFOSRestController
     /**
      * Replaces Article resource
      * @FOSRest\Put("/articles/{articleId}")
+     * @ParamConverter("articleDTO", converter="fos_rest.request_body")
+     * @param int $articleId
+     * @param ArticleDTO $articleDTO
      * @return View
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function putArticle(int $articleId, Request $request): View
+    public function putArticle(int $articleId, ArticleDTO $articleDTO): View
     {
-        $article = $this->articleService->updateArticle(
-            $articleId,
-            $request->get('name'),
-            $request->get('description')
-        );
+        $article = $this->articleService->updateArticle($articleId, $articleDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
         return View::create($article, Response::HTTP_OK);
