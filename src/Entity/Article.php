@@ -34,7 +34,7 @@ class Article
 
     public function setName(string $name)
     {
-        if (strlen($name < 5)) {
+        if (strlen($name) < 5) {
             throw new \InvalidArgumentException("Name {$name} needs to have more then 5 characters.");
         }
 
