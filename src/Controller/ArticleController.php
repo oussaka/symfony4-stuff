@@ -48,6 +48,7 @@ class ArticleController extends AbstractFOSRestController
      * Retrieves an Article resource.
      * @FOSRest\Get("/articles/{articleId}")
      * @return View
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function getArticle(int $articleId): View
     {
@@ -74,6 +75,7 @@ class ArticleController extends AbstractFOSRestController
      * Replaces Article resource
      * @FOSRest\Put("/articles/{articleId}")
      * @return View
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function putArticle(int $articleId, Request $request): View
     {
@@ -91,6 +93,7 @@ class ArticleController extends AbstractFOSRestController
      * Removes the Article resource
      * @FOSRest\Delete("/articles/{articleId}")
      * @return View
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function deleteArticle(int $articleId): View
     {
