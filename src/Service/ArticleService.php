@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityNotFoundException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ArticleService
 {
@@ -13,9 +14,15 @@ final class ArticleService
      */
     private $articleRepository;
 
-    public function __construct(ArticleRepository $articleRepository)
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(ArticleRepository $articleRepository, ValidatorInterface $validator)
     {
         $this->articleRepository = $articleRepository;
+        $this->validator = $validator;
     }
 
     public function getArticle(int $id): ?Article
@@ -38,6 +45,12 @@ final class ArticleService
             ->setName($name)
             ->setDescription($description)
         ;
+
+        $violations = $this->validator->validate($article);
+        if (\count($violations) > 0) {
+            throw new \DomainException((string)$violations);
+        }
+
         $this->articleRepository->save($article);
 
         return $article;
