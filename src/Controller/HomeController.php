@@ -11,6 +11,8 @@ namespace App\Controller;
 use App\Service\MarkdownHelper;
 use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
@@ -26,7 +28,6 @@ class HomeController extends AbstractController
 
     public function __invoke(MarkdownHelper $markdownHelper)
     {
-
         if ($slug ?? 'khaaaaaan' === 'khaaaaaan') {
             $message = $this->slack->createMessage()
                 ->from('Khan')
@@ -63,5 +64,16 @@ EOF;
             'slug'           => 'slugTest',
             'articleContent' => $articleContent,
         ]);
+    }
+
+    /**
+     * @Route("/news/{slug}/heart",name="article_toggle_heart",methods={"POST"})
+     * @param $slug
+     * @return JsonResponse
+     */
+    public function toggleArticleHeart($slug)
+    {
+        //TODO - actually heart/unheart the article!
+        return new JsonResponse(['hearts' =>rand(5,100)]);
     }
 }
