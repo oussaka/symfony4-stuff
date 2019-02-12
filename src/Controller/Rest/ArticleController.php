@@ -2,6 +2,8 @@
 
 namespace App\Controller\Rest;
 
+use App\Application\DTO\ArticleDTO;
+use App\Entity\Article;
 use App\Service\ArticleService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
@@ -9,6 +11,8 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Article controller
@@ -61,12 +65,15 @@ class ArticleController extends AbstractFOSRestController
     /**
      * Create Article.
      * @FOSRest\Post("/article")
-     * @param Request $request
+     * @ParamConverter("articleDTO", class="App\Application\DTO\ArticleDTO", converter="fos_rest.request_body")
+     * @param ArticleDTO $articleDTO
      * @return View
+     * @throws \Exception
      */
-    public function postArticle(Request $request): View
+    public function postArticle(ArticleDTO $articleDTO): View
     {
-        $article = $this->articleService->addArticle($request->get('name'), $request->get('description'));
+        dump($articleDTO); die;
+        $article = $this->articleService->addArticle($articleDTO);
 
         return View::create($article, Response::HTTP_CREATED, []);
     }

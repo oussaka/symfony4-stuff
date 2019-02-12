@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Application\DTO\ArticleDTO;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityNotFoundException;
@@ -39,11 +40,11 @@ final class ArticleService
         return $this->articleRepository->findAll();
     }
 
-    public function addArticle(string $name, string $description): Article
+    public function addArticle(ArticleDTO $articleDTO): Article
     {
         $article = (new Article())
-            ->setName($name)
-            ->setDescription($description)
+            ->setName($articleDTO->getName())
+            ->setDescription($articleDTO->getDescription())
         ;
 
         $violations = $this->validator->validate($article);
