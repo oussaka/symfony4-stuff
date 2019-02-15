@@ -8,6 +8,7 @@
 
 namespace App\Application\DTO;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ArticleDTO
@@ -17,11 +18,14 @@ final class ArticleDTO
 {
     /**
      * @Serializer\Type("string")
+     * @Assert\Length(min="5")
+     * @Assert\NotBlank
      */
     public $name;
 
     /**
      * @Serializer\Type("string")
+     * @Assert\NotBlank
      */
     public $description;
 

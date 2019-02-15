@@ -67,12 +67,15 @@ class ArticleController extends AbstractFOSRestController
      * @FOSRest\Post("/article")
      * @ParamConverter("articleDTO", class="App\Application\DTO\ArticleDTO", converter="fos_rest.request_body")
      * @param ArticleDTO $articleDTO
+     * @param ConstraintViolationListInterface $validationErrors
      * @return View
      * @throws \Exception
      */
-    public function postArticle(ArticleDTO $articleDTO): View
+    public function postArticle(ArticleDTO $articleDTO, ConstraintViolationListInterface $validationErrors): View
     {
-        dump($articleDTO); die;
+        if (count($validationErrors) > 0) {
+            return View::create($validationErrors, Response::HTTP_BAD_REQUEST);
+        }
         $article = $this->articleService->addArticle($articleDTO);
 
         return View::create($article, Response::HTTP_CREATED, []);
