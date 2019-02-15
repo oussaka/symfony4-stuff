@@ -22,4 +22,10 @@ class ArticleRepository extends ServiceEntityRepository
         $this->_em->persist($article);
         $this->_em->flush();
     }
+
+    public function delete(Article $article)
+    {
+        $this->_em->remove($article);
+        $this->_em->flush();
+    }
 }

@@ -71,7 +71,7 @@ final class ArticleService
 
     public function deleteArticle(int $id): void
     {
-        if (!$article = $this->articleRepository->findById($id)) {
+        if (!$article = $this->articleRepository->find($id)) {
             throw new EntityNotFoundException('Article with id '.$id.' does not exist!');
         }
 
